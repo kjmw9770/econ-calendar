@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경제 발표 캘린더 2026</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --card: #1c2128;
+    --border: #30363d;
+    --border2: #484f58;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #6e7681;
+    --fed: #388bfd;
+    --fed-bg: #0d2444;
+    --bok: #3fb950;
+    --bok-bg: #0d2d0d;
+    --data: #d29922;
+    --data-bg: #2d1e00;
+    --red: #f85149;
+    --red-bg: #3d0c0c;
+    --amber: #d29922;
+    --amber-bg: #2d1e00;
+    --accent: #388bfd;
+    --accent-bg: #0d2444;
+    --green: #3fb950;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 3rem;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 1.25rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-top { display: flex; align-items: center; justify-content: space-between; }
+  .header-title { font-size: 17px; font-weight: 600; color: var(--text); }
+  .header-sub { font-size: 12px; color: var(--text3); margin-top: 3px; }
+  .today-badge {
+    font-size: 11px; padding: 3px 9px;
+    background: var(--accent-bg); color: var(--fed);
+    border-radius: 20px; border: 1px solid #1f3a6e;
+    white-space: nowrap;
+  }
+
+  /* SUMMARY */
+  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 1rem 1.25rem 0; }
+  .sum-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 10px 12px;
+  }
+  .sum-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+  .sum-val { font-size: 20px; font-weight: 600; margin-top: 2px; }
+  .sum-sub { font-size: 10px; color: var(--text2); margin-top: 2px; line-height: 1.3; }
+
+  /* FILTERS */
+  .filters { display: flex; gap: 6px; padding: 1rem 1.25rem 0; flex-wrap: wrap; }
+  .fbtn {
+    font-size: 12px; padding: 5px 12px; border-radius: 20px;
+    border: 1px solid var(--border2); background: transparent;
+    color: var(--text2); cursor: pointer; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .fbtn:hover { border-color: var(--text2); color: var(--text); }
+  .fbtn.on { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 500; }
+
+  /* BODY */
+  .body { padding: 0 1.25rem; max-width: 680px; margin: 0 auto; }
+
+  .month-sep {
+    font-size: 11px; font-weight: 600; color: var(--text3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin: 1.4rem 0 0.5rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .month-sep::after { content:''; flex:1; height:1px; background: var(--border); }
+
+  /* EVENT CARD */
+  .ev {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 7px;
+    overflow: hidden; transition: border-color 0.15s;
+  }
+  .ev:hover { border-color: var(--border2); }
+  .ev.done { opacity: 0.55; }
+  .ev-top {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 14px 11px; cursor: pointer; user-select: none;
+  }
+  .ev-date { font-size: 12px; color: var(--text3); min-width: 32px; padding-top: 1px; font-variant-numeric: tabular-nums; }
+  .ev-body { flex: 1; min-width: 0; }
+  .ev-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .ev-detail { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.4; }
+  .badges { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    font-size: 10px; padding: 2px 7px; border-radius: 20px;
+    font-weight: 500; white-space: nowrap;
+  }
+  .b-fed { background: var(--fed-bg); color: var(--fed); border: 1px solid #1f3a6e; }
+  .b-bok { background: var(--bok-bg); color: var(--bok); border: 1px solid #1a3d1a; }
+  .b-data { background: var(--data-bg); color: var(--data); border: 1px solid #3d2d00; }
+  .b-hi { background: var(--red-bg); color: var(--red); border: 1px solid #5c1a1a; }
+  .b-med { background: var(--amber-bg); color: var(--amber); border: 1px solid #3d2d00; }
+  .b-done { background: #161b22; color: var(--text3); border: 1px solid var(--border); }
+  .b-day { border-radius: 20px; font-size: 10px; padding: 2px 8px; font-weight: 600; white-space: nowrap; }
+  .b-urgent { background: var(--red-bg); color: var(--red); border: 1px solid #5c1a1a; }
+  .b-soon { background: var(--amber-bg); color: var(--amber); border: 1px solid #3d2d00; }
+  .b-normal { background: var(--accent-bg); color: var(--fed); border: 1px solid #1f3a6e; }
+
+  .result-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; padding: 3px 8px; border-radius: 6px;
+    background: #0d2d0d; color: var(--green); border: 1px solid #1a3d1a;
+    margin-top: 6px; line-height: 1.4;
+  }
+  .memo-preview {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; padding: 3px 8px; border-radius: 6px;
+    background: var(--surface); color: var(--text2); border: 1px solid var(--border);
+    margin-top: 5px; line-height: 1.4; max-width: 100%;
+  }
+  .memo-preview span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .chev { font-size: 16px; color: var(--text3); transition: transform 0.2s; padding-top: 1px; flex-shrink: 0; }
+  .chev.open { transform: rotate(180deg); }
+
+  /* MEMO PANEL */
+  .memo-panel { display: none; border-top: 1px solid var(--border); padding: 12px 14px 14px; }
+  .memo-panel.open { display: block; }
+  .memo-lbl { font-size: 11px; color: var(--text3); margin-bottom: 6px; }
+  .memo-ta {
+    width: 100%; font-size: 13px; padding: 9px 11px;
+    border-radius: 8px; border: 1px solid var(--border2);
+    background: var(--surface); color: var(--text);
+    resize: none; font-family: inherit; line-height: 1.6;
+    min-height: 72px; outline: none; transition: border-color 0.15s;
+  }
+  .memo-ta::placeholder { color: var(--text3); }
+  .memo-ta:focus { border-color: var(--fed); }
+  .memo-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 7px; }
+  .memo-hint { font-size: 11px; color: var(--text3); }
+  .memo-btn {
+    font-size: 12px; padding: 5px 14px; border-radius: 8px;
+    border: 1px solid var(--border2); background: transparent;
+    color: var(--text2); cursor: pointer; transition: all 0.15s;
+  }
+  .memo-btn:hover { background: var(--surface); color: var(--text); }
+  .saved-msg { font-size: 11px; color: var(--green); display: none; }
+
+  /* EMPTY */
+  .empty { text-align: center; padding: 3rem 1rem; color: var(--text3); font-size: 14px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  @media (min-width: 640px) {
+    .body { padding: 0 2rem; }
+    .summary { padding: 1rem 2rem 0; grid-template-columns: repeat(3, 1fr); }
+    .filters { padding: 1rem 2rem 0; }
+    .header { padding: 1.2rem 2rem 1rem; }
+    .ev-name { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-title">📅 경제 발표 캘린더</div>
+    <div class="today-badge" id="today-badge">2026.08.29</div>
+  </div>
+  <div class="header-sub">미국 연준 · 한국 금통위 · 주요 경제지표 · 메모 가능</div>
+</div>
+
+<div class="summary">
+  <div class="sum-card">
+    <div class="sum-label">다음 이벤트</div>
+    <div class="sum-val" id="s-date" style="color:#388bfd; font-size:16px;">9/3</div>
+    <div class="sum-sub" id="s-name">미국 고용보고서</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-label">D-day</div>
+    <div class="sum-val" id="s-d" style="color:#f85149;">D-5</div>
+    <div class="sum-sub">다음 주요일정</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-label">다음 FOMC</div>
+    <div class="sum-val" style="color:#d29922; font-size:16px;">9/16</div>
+    <div class="sum-sub">한국시간 새벽 3시</div>
+  </div>
+</div>
+
+<div class="filters">
+  <button class="fbtn on" onclick="setF('all',this)">전체</button>
+  <button class="fbtn" onclick="setF('fed',this)">🇺🇸 미국 연준</button>
+  <button class="fbtn" onclick="setF('bok',this)">🇰🇷 한국 금통위</button>
+  <button class="fbtn" onclick="setF('data',this)">📊 경제지표</button>
+  <button class="fbtn" onclick="setF('hi',this)">🔴 HIGH만</button>
+</div>
+
+<div class="body" id="body"></div>
+
+<script>
+const TODAY = new Date();
+TODAY.setHours(0,0,0,0);
+
+const EVENTS = [
+  {id:'e1',date:'2026-08-27',cat:'bok',name:'한국 금통위',detail:'기준금리 결정 · 8월 통화정책방향 결정회의',result:'2.75% → 3.00% 인상 (백투백 · 6:1 찬성)',impact:'hi',done:true},
+  {id:'e2',date:'2026-08-28',cat:'fed',name:'잭슨홀 워시 의장 연설',detail:'연준 의장 취임 후 첫 잭슨홀 키노트 · 10am EDT',result:'인상 가능성 시사 · "인플레 기저 개선 안돼"',impact:'hi',done:true},
+  {id:'e3',date:'2026-09-03',cat:'data',name:'미국 고용보고서 (8월)',detail:'비농업 고용 · 실업률 · 평균 시간당 임금',result:'',impact:'hi',done:false},
+  {id:'e4',date:'2026-09-04',cat:'data',name:'ISM 제조업 PMI',detail:'8월 미국 제조업 경기지수',result:'',impact:'med',done:false},
+  {id:'e5',date:'2026-09-10',cat:'data',name:'미국 CPI (8월)',detail:'소비자물가지수 · FOMC 직전 핵심 지표',result:'',impact:'hi',done:false},
+  {id:'e6',date:'2026-09-11',cat:'data',name:'미국 PPI (8월)',detail:'생산자물가지수',result:'',impact:'med',done:false},
+  {id:'e7',date:'2026-09-16',cat:'fed',name:'FOMC 금리 결정',detail:'9/15~16 회의 · 한국시간 9/17 새벽 3시 발표',result:'',impact:'hi',done:false},
+  {id:'e8',date:'2026-09-25',cat:'data',name:'미국 PCE (8월)',detail:'개인소비지출 물가 · 연준 선호 인플레 지표',result:'',impact:'hi',done:false},
+  {id:'e9',date:'2026-09-26',cat:'data',name:'미국 GDP 2차 수정 (Q2)',detail:'2분기 GDP 성장률 수정치',result:'',impact:'med',done:false},
+  {id:'e10',date:'2026-10-02',cat:'data',name:'미국 고용보고서 (9월)',detail:'비농업 고용 · 실업률',result:'',impact:'hi',done:false},
+  {id:'e11',date:'2026-10-10',cat:'data',name:'미국 CPI (9월)',detail:'소비자물가지수',result:'',impact:'hi',done:false},
+  {id:'e12',date:'2026-10-22',cat:'bok',name:'한국 금통위',detail:'기준금리 결정 · 추가 인상 여부 핵심 관건',result:'',impact:'hi',done:false},
+  {id:'e13',date:'2026-10-30',cat:'data',name:'미국 PCE (9월)',detail:'개인소비지출 물가',result:'',impact:'hi',done:false},
+  {id:'e14',date:'2026-11-05',cat:'data',name:'미국 고용보고서 (10월)',detail:'비농업 고용 · 실업률',result:'',impact:'hi',done:false},
+  {id:'e15',date:'2026-11-13',cat:'fed',name:'FOMC 금리 결정',detail:'11월 FOMC · 한국시간 11/14 새벽 3시',result:'',impact:'hi',done:false},
+  {id:'e16',date:'2026-11-26',cat:'bok',name:'한국 금통위',detail:'기준금리 결정 · 2026년 마지막 금통위',result:'',impact:'hi',done:false},
+  {id:'e17',date:'2026-12-11',cat:'fed',name:'FOMC 금리 결정 + 점도표',detail:'12월 FOMC + 경제전망 발표 · 연간 총결산',result:'',impact:'hi',done:false},
+  {id:'e18',date:'2026-12-16',cat:'data',name:'미국 CPI (11월)',detail:'소비자물가지수',result:'',impact:'hi',done:false},
+];
+
+let memos = {};
+let openIds = {};
+let filt = 'all';
+
+function loadMemos() {
+  try { memos = JSON.parse(localStorage.getItem('econ_cal_memos') || '{}'); } catch(e) { memos = {}; }
+}
+function saveMemo(id, text) {
+  memos[id] = text;
+  localStorage.setItem('econ_cal_memos', JSON.stringify(memos));
+}
+
+function ddays(str) {
+  const d = new Date(str); d.setHours(0,0,0,0);
+  return Math.round((d - TODAY) / 86400000);
+}
+
+function fmtDate(str) {
+  const d = new Date(str);
+  return `${d.getMonth()+1}/${d.getDate()}`;
+}
+
+function fmtMonth(str) {
+  const d = new Date(str);
+  return `${d.getFullYear()}년 ${d.getMonth()+1}월`;
+}
+
+function dBadge(ev) {
+  if (ev.done || ddays(ev.date) < 0) return `<span class="badge b-done">완료</span>`;
+  const d = ddays(ev.date);
+  if (d === 0) return `<span class="badge b-day b-urgent">D-day</span>`;
+  if (d <= 7) return `<span class="badge b-day b-urgent">D-${d}</span>`;
+  if (d <= 21) return `<span class="badge b-day b-soon">D-${d}</span>`;
+  return `<span class="badge b-day b-normal">D-${d}</span>`;
+}
+
+function catBadge(cat) {
+  if (cat==='fed') return `<span class="badge b-fed">🇺🇸 미국 연준</span>`;
+  if (cat==='bok') return `<span class="badge b-bok">🇰🇷 한국 금통위</span>`;
+  return `<span class="badge b-data">📊 경제지표</span>`;
+}
+
+function render() {
+  let filtered = EVENTS;
+  if (filt === 'fed') filtered = EVENTS.filter(e=>e.cat==='fed');
+  else if (filt === 'bok') filtered = EVENTS.filter(e=>e.cat==='bok');
+  else if (filt === 'data') filtered = EVENTS.filter(e=>e.cat==='data');
+  else if (filt === 'hi') filtered = EVENTS.filter(e=>e.impact==='hi');
+
+  if (!filtered.length) {
+    document.getElementById('body').innerHTML = `<div class="empty">해당 조건의 이벤트가 없습니다.</div>`;
+    return;
+  }
+
+  let html = '';
+  let lastMonth = '';
+
+  filtered.forEach(ev => {
+    const month = fmtMonth(ev.date);
+    if (month !== lastMonth) {
+      html += `<div class="month-sep">${month}</div>`;
+      lastMonth = month;
+    }
+    const isOpen = !!openIds[ev.id];
+    const memo = memos[ev.id] || '';
+    const impact = ev.impact === 'hi'
+      ? `<span class="badge b-hi">🔴 HIGH</span>`
+      : `<span class="badge b-med">🟡 MED</span>`;
+
+    html += `
+    <div class="ev${ev.done ? ' done' : ''}" id="ev-${ev.id}">
+      <div class="ev-top" onclick="toggle('${ev.id}')">
+        <div class="ev-date">${fmtDate(ev.date)}</div>
+        <div class="ev-body">
+          <div class="ev-name">${ev.name}</div>
+          <div class="ev-detail">${ev.detail}</div>
+          <div class="badges">
+            ${catBadge(ev.cat)}
+            ${impact}
+            ${dBadge(ev)}
+          </div>
+          ${ev.result ? `<div class="result-pill">✅ ${ev.result}</div>` : ''}
+          ${memo ? `<div class="memo-preview">📝 <span>${memo.length>32?memo.slice(0,32)+'…':memo}</span></div>` : ''}
+        </div>
+        <div class="chev${isOpen?' open':''}">›</div>
+      </div>
+      <div class="memo-panel${isOpen?' open':''}" id="mp-${ev.id}">
+        <div class="memo-lbl">📝 메모 (로컬 저장)</div>
+        <textarea class="memo-ta" id="ta-${ev.id}" placeholder="투자 판단, 예상 시나리오, 시장 반응 등...">${memo}</textarea>
+        <div class="memo-footer">
+          <span class="saved-msg" id="sm-${ev.id}">✅ 저장됨</span>
+          <button class="memo-btn" onclick="doSave('${ev.id}')">💾 저장</button>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('body').innerHTML = html;
+}
+
+function toggle(id) {
+  openIds[id] = !openIds[id];
+  render();
+  if (openIds[id]) {
+    const ta = document.getElementById('ta-'+id);
+    if (ta) setTimeout(()=>ta.focus(),50);
+  }
+}
+
+function doSave(id) {
+  const ta = document.getElementById('ta-'+id);
+  if (!ta) return;
+  saveMemo(id, ta.value);
+  const sm = document.getElementById('sm-'+id);
+  if (sm) { sm.style.display='inline'; setTimeout(()=>{ sm.style.display='none'; },1500); }
+  render();
+  openIds[id] = true;
+}
+
+function setF(f, btn) {
+  filt = f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  render();
+}
+
+function updateSummary() {
+  const now = new Date(); now.setHours(0,0,0,0);
+  const upcoming = EVENTS.filter(e=>!e.done && ddays(e.date)>=0);
+  if (!upcoming.length) return;
+  const next = upcoming[0];
+  const d = ddays(next.date);
+  document.getElementById('s-date').textContent = fmtDate(next.date);
+  document.getElementById('s-name').textContent = next.name.length>12?next.name.slice(0,12)+'…':next.name;
+  const dEl = document.getElementById('s-d');
+  dEl.textContent = d===0?'D-day':`D-${d}`;
+  dEl.style.color = d<=7?'#f85149':d<=21?'#d29922':'#388bfd';
+
+  const today = new Date();
+  document.getElementById('today-badge').textContent =
+    `${today.getFullYear()}.${String(today.getMonth()+1).padStart(2,'0')}.${String(today.getDate()).padStart(2,'0')}`;
+}
+
+loadMemos();
+updateSummary();
+render();
+</script>
+</body>
+</html>
