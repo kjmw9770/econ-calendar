@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#0d1117"/>
+  <rect x="80" y="100" width="352" height="312" rx="28" fill="#161b22"/>
+  <rect x="80" y="100" width="352" height="100" rx="28" fill="#388bfd"/>
+  <rect x="80" y="160" width="352" height="40" fill="#388bfd"/>
+  <rect x="148" y="64" width="32" height="80" rx="16" fill="#388bfd"/>
+  <rect x="332" y="64" width="32" height="80" rx="16" fill="#388bfd"/>
+  <rect x="120" y="240" width="60" height="48" rx="10" fill="#388bfd" opacity="0.3"/>
+  <rect x="226" y="240" width="60" height="48" rx="10" fill="#388bfd" opacity="0.3"/>
+  <rect x="332" y="240" width="60" height="48" rx="10" fill="#f85149" opacity="0.8"/>
+  <rect x="120" y="308" width="60" height="48" rx="10" fill="#388bfd" opacity="0.3"/>
+  <rect x="226" y="308" width="60" height="48" rx="10" fill="#3fb950" opacity="0.5"/>
+  <rect x="332" y="308" width="60" height="48" rx="10" fill="#388bfd" opacity="0.3"/>
+  <text x="362" y="344" font-family="Arial" font-size="32" font-weight="bold" fill="#f85149" text-anchor="middle">!</text>
+</svg>
