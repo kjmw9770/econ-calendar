@@ -353,19 +353,35 @@ function updateSummary() {
 /* ===== 뉴스 탭 ===== */
 const NEWS_FEEDS = [
   {
-    label: '연합뉴스 경제',
-    url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.yonhapnews.co.kr/rss/economy.xml&count=8'
+    label: '매일경제',
+    url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.mk.co.kr/rss/30000001/&count=15'
   },
   {
-    label: '한국경제 증권',
-    url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.hankyung.com/feed/securities&count=8'
+    label: '한국경제',
+    url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.hankyung.com/feed/economy&count=15'
+  },
+  {
+    label: '연합뉴스',
+    url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.yonhapnews.co.kr/rss/economy.xml&count=15'
+  },
+  {
+    label: '머니투데이',
+    url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.mt.co.kr/rss/news/stock_list.xml&count=15'
   }
 ];
 
-const NEWS_KEYWORDS = ['금리','기준금리','주식','코스피','코스닥','증시','FOMC','연준','한국은행','금통위','공매도','외국인','기관','ETF','상장','IPO','정책','규제','세금','배당','자사주','투자','환율','달러'];
+const NEWS_KEYWORDS = [
+  '금리','기준금리','주식','코스피','코스닥','증시','FOMC','연준','Fed','한국은행','금통위',
+  '공매도','외국인','기관','ETF','상장','IPO','정책','규제','세금','배당','자사주',
+  '투자','환율','달러','원달러','긴축','피벗','인상','인하','동결','채권','국채',
+  '증권','펀드','운용','선물','옵션','지수','시장','경제','물가','인플레','CPI','PCE',
+  '고용','실업','GDP','성장률','무역','수출','수입','반도체','2차전지','바이오'
+];
 
 function matchesKeyword(title) {
-  return NEWS_KEYWORDS.some(kw => title.includes(kw));
+  if (!title) return false;
+  // 키워드 없으면 전체 표시 (피드 자체가 경제/증권 피드이므로)
+  return true;
 }
 
 function relTime(pubDate) {
