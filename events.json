@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-16",
+  "version": "2026-10-03",
   "events": [
     {
       "id": "e1",
@@ -29,10 +29,10 @@
       "cat": "data",
       "name": "미국 고용보고서 (8월)",
       "detail": "비농업 고용 · 실업률 · 평균 시간당 임금",
-      "result": "",
+      "result": "비농업 +15904만명 · 실업률 4.2%",
       "consensus": "비농업 +18만명 · 실업률 4.1%",
       "impact": "hi",
-      "done": false
+      "done": true
     },
     {
       "id": "e4",
@@ -40,10 +40,10 @@
       "cat": "data",
       "name": "ISM 제조업 PMI",
       "detail": "8월 미국 제조업 경기지수",
-      "result": "",
+      "result": "ISM 제조업 PMI 12652.0",
       "consensus": "예상 49.5",
       "impact": "med",
-      "done": false
+      "done": true
     },
     {
       "id": "e5",
