@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-03",
+  "version": "2026-10-15",
   "events": [
     {
       "id": "e1",
@@ -51,10 +51,10 @@
       "cat": "data",
       "name": "미국 CPI (8월)",
       "detail": "소비자물가지수 · FOMC 직전 핵심 지표",
-      "result": "",
+      "result": "CPI 전년비 +336.3%",
       "consensus": "전월비 +0.2% · 전년비 +3.1% 예상",
       "impact": "hi",
-      "done": false
+      "done": true
     },
     {
       "id": "e6",
