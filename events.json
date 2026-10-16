@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-15",
+  "version": "2026-10-17",
   "events": [
     {
       "id": "e1",
@@ -62,10 +62,10 @@
       "cat": "data",
       "name": "미국 PPI (8월)",
       "detail": "생산자물가지수",
-      "result": "",
+      "result": "PPI 전월비 +295.7%",
       "consensus": "전월비 +0.1% 예상",
       "impact": "med",
-      "done": false
+      "done": true
     },
     {
       "id": "e7",
