@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-17",
+  "version": "2026-10-22",
   "events": [
     {
       "id": "e1",
@@ -128,10 +128,10 @@
       "cat": "bok",
       "name": "한국 금통위",
       "detail": "기준금리 결정 · 추가 인상 여부 핵심 관건",
-      "result": "",
+      "result": "발표 완료 (수동 입력 필요)",
       "consensus": "",
       "impact": "hi",
-      "done": false
+      "done": true
     },
     {
       "id": "e13",
