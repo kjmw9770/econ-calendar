@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-22",
+  "version": "2026-10-30",
   "events": [
     {
       "id": "e1",
@@ -84,10 +84,10 @@
       "cat": "data",
       "name": "미국 PCE (8월)",
       "detail": "개인소비지출 물가 · 연준 선호 인플레 지표",
-      "result": "",
+      "result": "PCE 전년비 +132.3%",
       "consensus": "전월비 +0.2% 예상",
       "impact": "hi",
-      "done": false
+      "done": true
     },
     {
       "id": "e9",
@@ -95,10 +95,10 @@
       "cat": "data",
       "name": "미국 GDP 2차 수정 (Q2)",
       "detail": "2분기 GDP 성장률 수정치",
-      "result": "",
+      "result": "GDP 성장률 연율 +3.4%",
       "consensus": "연율 +2.1% 예상",
       "impact": "med",
-      "done": false
+      "done": true
     },
     {
       "id": "e10",
