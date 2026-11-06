@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-30",
+  "version": "2026-11-07",
   "events": [
     {
       "id": "e1",
@@ -106,10 +106,10 @@
       "cat": "data",
       "name": "미국 고용보고서 (9월)",
       "detail": "비농업 고용 · 실업률",
-      "result": "",
+      "result": "비농업 +15929만명 · 실업률 4.1%",
       "consensus": "",
       "impact": "hi",
-      "done": false
+      "done": true
     },
     {
       "id": "e11",
