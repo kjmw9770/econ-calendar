@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-07",
+  "version": "2026-11-11",
   "events": [
     {
       "id": "e1",
@@ -117,10 +117,10 @@
       "cat": "data",
       "name": "미국 CPI (9월)",
       "detail": "소비자물가지수",
-      "result": "",
+      "result": "CPI 전년비 +337.5%",
       "consensus": "",
       "impact": "hi",
-      "done": false
+      "done": true
     },
     {
       "id": "e12",
